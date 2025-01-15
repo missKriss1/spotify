@@ -23,26 +23,29 @@ const Albums = () => {
   }, [dispatch, artistId]);
 
   return (
-    <Box sx={{padding: 2}}>
-      <Typography variant="h4" sx={{marginBottom: 2}}>
-        Albums
-      </Typography>
-      <hr/>
-      <h3 className="mb-2">
-        Artist: {artist ? artist.name : 'Not found'}
-      </h3>
-      {albums.length === 0 ? (
-        <Typography>No albums found</Typography>
-      ) : (
-        <Grid container spacing={2}>
-          {albums.map((album) => (
-            <Grid size={{xs: 6, md: 4}} key={album._id}>
-              <AlbumCard album={album}/>
-            </Grid>
-          ))}
-        </Grid>
-      )}
-    </Box>
+    <div >
+      <Box sx={{padding: 2}}>
+        <Typography variant="h4" sx={{marginBottom: 2}}>
+          Albums
+        </Typography>
+        <hr/>
+        <h3 className="mb-2">
+          Artist: {artist ? artist.name : 'Not found'}
+        </h3>
+        {albums.length === 0 ? (
+          <Typography>No albums found</Typography>
+        ) : (
+          <Grid container spacing={2}>
+            {albums.map((album) => (
+              <Grid size={{xs: 6, md: 4}} key={album._id}>
+                <AlbumCard album={album}/>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
+    </div>
+
   );
 };
 
