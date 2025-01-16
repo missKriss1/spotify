@@ -15,7 +15,7 @@ const AppToolBar = () => {
       <AppBar position="sticky" sx={{ mb: 2 }}>
         <Container>
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
               <Link to="/">Spotify</Link>
             </Typography>
           </Toolbar>

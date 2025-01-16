@@ -5,17 +5,20 @@ import { RootState } from '../../app/store.ts';
 
 interface ArtistsState {
   artists: Artists[];
+  artist: Artists |null;
   fetchingLoading: boolean;
   fetchError: boolean;
 }
 
 const initialState: ArtistsState = {
   artists: [],
+  artist: null,
   fetchingLoading: false,
   fetchError: false,
 }
 
 export const selectArtists = (state: RootState) => state.artists.artists
+export const selectOneArtist = (state: RootState) => state.artists.artist
 export const selectArtistsLoading = (state: RootState) => state.artists.fetchingLoading
 
 export const artistsSlice = createSlice({
@@ -37,9 +40,9 @@ export const artistsSlice = createSlice({
       .addCase(getArtistById.pending, (state) =>{
         state.fetchingLoading = true
       })
-      .addCase(getArtistById.fulfilled, (state, {payload: artists}) =>{
+      .addCase(getArtistById.fulfilled, (state, {payload: artist}) =>{
         state.fetchingLoading = false;
-        state.artists = artists;
+        state.artist = artist;
       })
       .addCase(getArtistById.rejected, (state) =>{
         state.fetchError = true
