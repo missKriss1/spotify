@@ -1,18 +1,19 @@
+
 import { useState } from 'react';
 import { RegisterMutation } from '../../types';
-import { Avatar, Box, Button, Container } from '@mui/material';
+import { Alert, Avatar, Box, Button, Container } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid2';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Typography from '@mui/material/Typography';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectUserError } from './userSlice.ts';
+import { selectLoginError } from './userSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { register } from './userThunk.ts';
+import { login } from './userThunk.ts';
 
-const RegisterUser = () => {
+const LoginUser = () => {
   const dispatch = useAppDispatch();
-  const registerError = useAppSelector(selectUserError);
+  const loginError = useAppSelector(selectLoginError);
   const navigate = useNavigate();
 
 
@@ -28,18 +29,9 @@ const RegisterUser = () => {
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    try{
-      await dispatch(register(form)).unwrap()
+      await dispatch(login(form)).unwrap()
       navigate('/');
-    }catch(e){
-      console.log(e);
-    }
   }
-
-  const getFielderror = (fieldName: string) => {
-    return registerError?.errors[fieldName]?.message;
-  }
-
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -52,11 +44,16 @@ const RegisterUser = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+            <LockOpenIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign in
           </Typography>
+          {loginError && (
+            <Alert severity='error' sx={{mt:3 , width: '100%'}}>
+              {loginError.error}
+            </Alert>
+          )}
           <Box component="form" noValidate onSubmit={submitHandler} sx={{ mt: 3 }}>
             <Grid container direction={'column'} spacing={2}>
               <Grid  size ={12}>
@@ -67,8 +64,6 @@ const RegisterUser = () => {
                   name="username"
                   value={form.username}
                   onChange={inpytChangeHandler}
-                  error={Boolean(getFielderror('username'))}
-                  helperText={getFielderror('username')}
                 />
               </Grid>
               <Grid  size ={12}>
@@ -80,8 +75,6 @@ const RegisterUser = () => {
                   id="password"
                   value={form.password}
                   onChange={inpytChangeHandler}
-                  error={Boolean(getFielderror('password'))}
-                  helperText={getFielderror('password')}
                 />
               </Grid>
             </Grid>
@@ -91,13 +84,14 @@ const RegisterUser = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign In
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid>
-                <NavLink to='/login'>
-                  Already have an account? Sign in
+                <NavLink to='/register'>
+                  No account yet? Sign Up
                 </NavLink>
+
               </Grid>
             </Grid>
           </Box>
@@ -107,4 +101,4 @@ const RegisterUser = () => {
   );
 };
 
-export default RegisterUser;
+export default LoginUser;

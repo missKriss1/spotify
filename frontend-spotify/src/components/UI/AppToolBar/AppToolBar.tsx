@@ -21,6 +21,9 @@ const AppToolBar = () => {
             <Button component={NavLink} to = "/register" color = "inherit">
               Sing up
             </Button>
+            <Button component={NavLink} to = "/login" color = "inherit">
+              Sing in
+            </Button>
           </Toolbar>
         </Container>
       </AppBar>
